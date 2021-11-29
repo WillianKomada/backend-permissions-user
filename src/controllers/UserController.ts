@@ -13,7 +13,7 @@ class UserController {
     const existUser = await userRepository.findOne({ username });
 
     if (existUser) {
-      return response.status(400).json({ message: 'User already exists!' });
+      return response.status(400).json({ error: 'User already exists!' });
     }
 
     const passwordHashed = await hash(password, 8);
