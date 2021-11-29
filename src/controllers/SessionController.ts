@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
+
 import UserRepository from '../repositories/UserRepository';
 
 class SessionController {
@@ -10,7 +11,7 @@ class SessionController {
 
     const userRepository = getCustomRepository(UserRepository);
 
-    const user = await userRepository.findOne({ username });
+    const user = await userRepository.findOne({ username }, { relations: ['roles'] });
 
     if (!user) {
       return response.status(400).json({ error: 'User not found!' });
@@ -22,7 +23,9 @@ class SessionController {
       return response.status(400).json({ error: 'Incorrect username or password!' });
     }
 
-    const token = sign({}, "7f21739d1e7de099d65af563a38138e8", {
+    const roles = user.roles.map(role => role.name);
+
+    const token = sign({ roles }, "7f21739d1e7de099d65af563a38138e8", {
       subject: user.id,
       expiresIn: '1d'
     });

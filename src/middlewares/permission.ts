@@ -4,13 +4,13 @@ import { getCustomRepository } from 'typeorm';
 import User from '../models/User';
 import UserRepository from '../repositories/UserRepository';
 
-async function decoder(request:Request): Promise<User> {
-  const authHeader = request.headers.authorization;
+async function decoder(request:Request): Promise<User | undefined> {
+  const authHeader = request.headers.authorization || "";
   const userRepository = getCustomRepository(UserRepository);
 
   const [, token] = authHeader?.split(" ");
 
-  const payload: any = decode(token);
+  const payload = decode(token);
 
   const user = await userRepository.findOne(payload?.sub, { relations: ['roles'] });
 
@@ -35,3 +35,5 @@ function is(role: String[]) {
 
   return roleAuthorized;
 }
+
+export { is };
