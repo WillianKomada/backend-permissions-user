@@ -14,6 +14,8 @@ router.post('/sessions', SessionController.create);
 router.post('/permissions', PermissionController.create);
 router.post('/roles', RoleController.create);
 
+router.get('/users/roles', UserController.roles);
+
 router.post('/products', is(["ROLE_ADMIN"]), ProductController.create);
 router.get('/products', is(['ROLE_ADMIN', 'ROLE_USER']), ProductController.index);
 router.get('/products/:id', is(['ROLE_ADMIN', 'ROLE_USER']), ProductController.show);

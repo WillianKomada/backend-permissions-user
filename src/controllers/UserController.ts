@@ -1,8 +1,9 @@
-import { Request, Response } from 'express';
+import { request, Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 import UserRepository from '../repositories/UserRepository';
 import RoleRepository from '../repositories/RoleRepository';
+import { decode } from 'jsonwebtoken';
 
 class UserController {
 
@@ -34,6 +35,36 @@ class UserController {
     delete user.password;
 
     return response.status(201).json(user);
+  }
+
+  async roles(request: Request, response: Response) {
+    const authHeader = request.headers.authorization || "";
+    
+    const userRepository = getCustomRepository(UserRepository);
+
+    const [, token] = authHeader?.split(" ");
+
+    try {
+      if (!token) {
+        return response.status(401).json({ error: "Not authorized!" });
+      }
+
+      const payload: any = decode(token);
+
+      if (!payload) {
+        return response.status(401).json({ error: "Not authorized!" });
+      }
+
+      const user = await userRepository.findOne(payload?.sub, {
+        relations: ["roles"],
+      });
+
+      const roles = user?.roles.map((r) => r.name);
+
+      return response.json(roles);
+    } catch (err) {
+      return response.status(400).send();
+    }
   }
 }
 
