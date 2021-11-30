@@ -10,7 +10,7 @@ async function decoder(request:Request): Promise<User | undefined> {
 
   const [, token] = authHeader?.split(" ");
 
-  const payload = decode(token);
+  const payload: any  = decode(token);
 
   const user = await userRepository.findOne(payload?.sub, { relations: ['roles'] });
 
