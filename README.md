@@ -11,3 +11,5 @@ Passo à passo da construção da aplicação Back-end
 ✅ Cadastro de Products <br/>
 ✅ Conexão de User_Roles <br/>
 ✅ Conexão de Permission_Roles
+
+Em conjunto com [Front-end](https://github.com/WillianKomada/frontend-permissions-user)
