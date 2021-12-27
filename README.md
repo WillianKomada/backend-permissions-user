@@ -4,10 +4,10 @@ Esse projeto foi desenvolvido com o objetivo de aprender a como criar controle d
 
 Passo à passo da construção da aplicação Back-end
 
-[ ]Cadastro de Users 
-- [] Autenticação de Users
-[] Cadastro de Permissions
-[] Cadastro de Roles
-[] Cadastro de Products
-[] Conexão de User_Roles
-[] Conexão de Permission_Roles
+✅ Cadastro de Users 
+✅ Autenticação de Users
+✅ Cadastro de Permissions
+✅ Cadastro de Roles
+✅ Cadastro de Products
+✅ Conexão de User_Roles
+✅ Conexão de Permission_Roles
